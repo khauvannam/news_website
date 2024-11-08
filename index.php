@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "global_config.php";
+require_once "../news_website/config/global_config.php";
 
 spl_autoload_register(function ($class) {
     require "controllers/" . $class . ".php";
@@ -10,11 +10,21 @@ spl_autoload_register(function ($class) {
 $baseDir = ROOT_URL;
 
 $router = [
-    'get' => [],
-    'post' => [],
+    'get' => [
+        '' => [new homeController, 'index'],
+        'category' => [new categoryController, 'index'],
+        'category_create' => [new categoryController, 'add'],
+        'category_edit' => [new categoryController, 'edit'],
+        'category_delete' => [new categoryController, 'delete'],
+    ],
+    'post' => [
+        'category_create_' => [new categoryController, 'add_'],
+        'category_edit_' => [new categoryController, 'edit_'],
+    ],
 ];
 
 $path = substr($_SERVER['REQUEST_URI'], strlen($baseDir));
+
 $arr = explode("?", $path);
 $route = strtolower($arr[0]);
 if (count($arr) >= 2) parse_str($arr[1], $params);

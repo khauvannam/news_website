@@ -129,12 +129,12 @@
         <!-- Language Selection Flags -->
         <div class="flex space-x-2">
           <img
-            src="../public/image/vietnam.webp"
+            src="<?php ROOT_URL ?>public/image/vietnam.webp"
             alt="Vietnam Flag"
             class="h-5 w-7"
           />
-          <img src="../public/image/usa.png" alt="UK Flag" class="h-5 w-7" />
-          <img src="../public/image/japan.webp" alt="Korea Flag" class="h-5 w-7" />
+          <img src="<?php ROOT_URL ?>public/image/usa.png" alt="UK Flag" class="h-5 w-7" />
+          <img src="<?php ROOT_URL ?>public/image/japan.webp" alt="Korea Flag" class="h-5 w-7" />
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@
         </button>
         <!-- Logo -->
         <a href="#" class="flex items-center space-x-2">
-          <img src="../public/image/logo.webp" alt="Vina Office Logo" class="h-20"  />
+          <img src="<?php ROOT_URL ?>public/image/logo.webp" alt="Vina Office Logo" class="h-20"  />
         </a>
 
         <!-- Navigation Links -->
