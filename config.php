@@ -7,11 +7,11 @@ const DB_USER = "nam";
 
 const DB_PASS = "Ex@mple12345";
 
-const ROOT_URL = "php2/php2web/banhang/";
+const ROOT_URL = "/news_website/";
 
 const BASE_DIR = __DIR__;
 
-const PUBLIC_URL = ROOT_URL . "/public/";
+const PUBLIC_URL = ROOT_URL . "public/";
 
 
-?>
+
