@@ -7,7 +7,7 @@ services:
       - '3375:3306'
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: labs
+      MYSQL_DATABASE: news
       MYSQL_USER: nam
       MYSQL_PASSWORD: Ex@mple12345
 
