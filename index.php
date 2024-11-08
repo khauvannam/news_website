@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "global_config.php";
+require_once "./config/global_config.php";
 
 spl_autoload_register(function ($class) {
     require "controllers/" . $class . ".php";
@@ -10,7 +10,9 @@ spl_autoload_register(function ($class) {
 $baseDir = ROOT_URL;
 
 $router = [
-    'get' => [],
+    'get' => [
+        'home' => [new userController(), 'register']
+    ],
     'post' => [],
 ];
 
