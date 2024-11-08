@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "config.php";
+require_once "global_config.php";
 
 spl_autoload_register(function ($class) {
     require "controllers/" . $class . ".php";
