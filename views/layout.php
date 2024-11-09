@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><?php echo $title; ?></title>
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
     />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -44,7 +44,7 @@
                                     .then(response => response.json())
                                     .then(result => {
                                         if (result.uploaded) {
-                                            resolve({default: result.url});
+                                            resolve({ default: result.url });
                                         } else {
                                             reject(result.error ? result.error.message : 'Upload failed');
                                         }
@@ -66,6 +66,15 @@
         .catch(error => console.error(error));
 
     document.getElementById('title').addEventListener('input', updateUploadUrl);
+
+    // Ensure CKEditor HTML content is updated in the textarea before form submission
+    document.querySelector('form').addEventListener('submit', function (event) {
+        if (editor) {
+            // Update textarea with HTML content
+            document.querySelector('textarea[name="content"]').value = editor.getData();
+        }
+    });
 </script>
+
 </body>
 </html>

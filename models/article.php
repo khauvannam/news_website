@@ -7,7 +7,7 @@ class Article extends Model
     // Retrieve all articles with category information
     public function getAllArticles(): array
     {
-        $sql = "SELECT a.id, a.title, a.image, a.date, a.views, a.content, a.visible, c.name AS category 
+        $sql = "SELECT a.id, a.title, a.date, a.views, a.content, a.visible, c.name AS category 
                 FROM articles a
                 JOIN categories c ON a.category_id = c.id";
         return $this->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -16,18 +16,17 @@ class Article extends Model
     // Save a new article with category ID and the current date
     public function saveArticle(
         string $title,
-        string $image,
         string $content,
         int    $visible,
-        int    $category_id
+        int    $category_id,
+
     ): int|false
     {
-        $sql = "INSERT INTO articles (title, image, date, content, visible, category_id) 
-                VALUES (:title, :image, NOW(), :content, :visible, :category_id)";
+        $sql = "INSERT INTO articles (title, created_at, content, visible, category_id) 
+                VALUES (:title, NOW(), :content, :visible, :category_id)";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":image", $image);
         $stmt->bindParam(":content", $content);
         $stmt->bindParam(":visible", $visible);
         $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);
@@ -55,7 +54,6 @@ class Article extends Model
     public function updateArticle(
         int    $id,
         string $title,
-        string $image, // New image (can be empty if not updating)
         string $content,
         int    $visible,
         int    $category_id
@@ -98,13 +96,12 @@ class Article extends Model
 
         // Update the article with new content and main image
         $sql = "UPDATE articles 
-            SET title = :title, image = :image, 
+            SET title = :title,
                 content = :content, visible = :visible, category_id = :category_id
             WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":image", $updatedImage); // Use updated image path
         $stmt->bindParam(":content", $content);
         $stmt->bindParam(":visible", $visible);
         $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);

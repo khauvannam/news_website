@@ -21,6 +21,7 @@ $router = [
     'post' => [
         'category_create_' => [new categoryController, 'add_'],
         'category_edit_' => [new categoryController, 'edit_'],
+        'article_create_' => [new articleController, 'store'],  
     ],
 ];
 

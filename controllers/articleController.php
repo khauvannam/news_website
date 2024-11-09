@@ -33,16 +33,15 @@ class ArticleController
     {
         // Retrieve form data
         $title = trim(strip_tags($_POST['title']));
-        $image = trim(strip_tags($_POST['image']));
         $content = trim(strip_tags($_POST['content']));
         $visible = (int)$_POST['visible'];
         $category_id = (int)$_POST['category_id'];
 
         // Save the article
-        $articleId = $this->articleModel->saveArticle($title, $image, $content, $visible, $category_id);
+        $articleId = $this->articleModel->saveArticle($title, $content, $visible, $category_id);
 
         if ($articleId) {
-            header("Location: article"); // Redirect to article list
+            header("Location: "); // Redirect to article list
         } else {
             echo "Failed to save article.";
         }
@@ -81,12 +80,11 @@ class ArticleController
     {
         $id = (int)$_POST['id'];
         $title = trim(strip_tags($_POST['title']));
-        $image = trim(strip_tags($_POST['image']));
         $content = trim(strip_tags($_POST['content']));
         $visible = (int)$_POST['visible'];
         $category_id = (int)$_POST['category_id'];
 
-        $success = $this->articleModel->updateArticle($id, $title, $image, $content, $visible, $category_id);
+        $success = $this->articleModel->updateArticle($id, $title, $content, $visible, $category_id);
 
         if ($success) {
             header("Location: article"); // Redirect to article list

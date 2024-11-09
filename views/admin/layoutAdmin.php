@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><?php echo $title; ?></title>
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
     />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -23,25 +23,25 @@
         </div>
         <ul>
             <li class="mb-2">
-                <a href="<?="admin"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                <a href="<?= "admin" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
                     <i class="fas fa-tachometer-alt mr-2"></i>
                     Dashboard
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="category"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
-                <i class="fa-solid fa-layer-group"></i>
+                <a href="<?= "category" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                    <i class="fa-solid fa-layer-group"></i>
                     Categories
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="article"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
-                <i class="fa-regular fa-newspaper"></i>
+                <a href="<?= "article" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                    <i class="fa-regular fa-newspaper"></i>
                     Articles
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="logout"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                <a href="<?= "logout" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
                     <i class="fas fa-sign-out-alt mr-2"></i>
                     Logout
                 </a>
@@ -65,7 +65,6 @@
         </main>
     </div>
 </div>
-
 
 
 <!-- CKEditor Script -->
