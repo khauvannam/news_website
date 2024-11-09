@@ -7,36 +7,35 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header('Content-Type: application/json');
 
 // Check if it's an OPTIONS request (CORS preflight) and exit early if so
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+if ($_SERVER['request_method'] == 'OPTIONS') {
     exit(0);
 }
 
+// Get the title from the query string
 $title = !empty($_GET['title']) ? preg_replace('/\s+/', '_', $_GET['title']) : 'default';
 
-if (isset($_FILES['upload']) && is_array($_FILES['upload']['name'])) {
-    $urls = [];
-    foreach ($_FILES['upload']['name'] as $index => $originalName) {
-        if ($_FILES['upload']['error'][$index] === 0) {
-            // Folder and filename setup
-            $folderName = isset($_POST['name']) ? str_replace(' ', '_', trim($_POST['name'])) : 'default';
-            $uploadDir = 'uploads/' . $folderName . '/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
-            // File with unique timestamp name
-            $extension = pathinfo($originalName, PATHINFO_EXTENSION);
-            $filename = round(microtime(true) * 1000) . '.' . $extension;
-            $targetFilePath = $uploadDir . $filename;
+// Handle file upload if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['upload']) && $_FILES['upload']['error'] === 0) {
+    $file = $_FILES['upload'];
+    $uploadDir = __DIR__ . "/upload/{$title}/"; // Directory based on title
 
-            if (move_uploaded_file($_FILES['upload']['tmp_name'][$index], $targetFilePath)) {
-                $urls[] = ['url' => '/' . $targetFilePath];
-            } else {
-                echo json_encode(['error' => ['message' => 'Failed to move uploaded file.']]);
-                exit;
-            }
-        }
+    // Create the directory if it doesn't exist
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
     }
-    echo json_encode($urls); // Return array of URLs for all files
+
+    // Generate a unique filename
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $timestamp = round(microtime(true) * 1000);
+    $filename = $timestamp . '.' . $extension;
+    $targetFilePath = $uploadDir . $filename;
+
+    if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+        $url = BASE_URL . '/news_website/config/upload/' . $title . '/' . $filename;
+        echo json_encode(['uploaded' => true, 'url' => $url]);
+    } else {
+        echo json_encode(['uploaded' => false, 'error' => ['message' => 'Failed to move uploaded file.']]);
+    }
 } else {
-    echo json_encode(['error' => ['message' => 'No files uploaded or upload error occurred.']]);
+    echo json_encode(['error' => ['message' => 'No file uploaded or upload error occurred.']]);
 }

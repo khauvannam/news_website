@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><?php echo $title; ?></title>
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
     />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -23,25 +23,25 @@
         </div>
         <ul>
             <li class="mb-2">
-                <a href="<?="admin"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                <a href="<?= "admin" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
                     <i class="fas fa-tachometer-alt mr-2"></i>
                     Dashboard
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="category"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
-                <i class="fa-solid fa-layer-group"></i>
+                <a href="<?= "category" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                    <i class="fa-solid fa-layer-group"></i>
                     Categories
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="article"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
-                <i class="fa-regular fa-newspaper"></i>
+                <a href="<?= "article" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                    <i class="fa-regular fa-newspaper"></i>
                     Articles
                 </a>
             </li>
             <li class="mb-2">
-                <a href="<?="logout"?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
+                <a href="<?= "logout" ?>" class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded">
                     <i class="fas fa-sign-out-alt mr-2"></i>
                     Logout
                 </a>
@@ -67,20 +67,51 @@
 </div>
 
 
-
 <!-- CKEditor Script -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
 <script>
-   ClassicEditor
-        .create(document.querySelector('#editor'), {
-            ckfinder: {
-                uploadUrl: './config/upload_config.php'
-            },
-        }).then(editor => {
-            window.editor = editor;
-        }).catch(error => {
-            console.error(error);
-        });
+    let editor;
+
+    function updateUploadUrl() {
+        const title = document.getElementById('title').value.trim().replace(/\s+/g, '_');
+        if (editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return {
+                    upload: () => {
+                        return loader.file
+                            .then((file) => new Promise((resolve, reject) => {
+                                const data = new FormData();
+                                data.append('upload', file);
+
+                                fetch(`./config/upload_config.php?title=${title}`, {
+                                    method: 'POST',
+                                    body: data,
+                                })
+                                    .then(response => response.json())
+                                    .then(result => {
+                                        if (result.uploaded) {
+                                            resolve({default: result.url});
+                                        } else {
+                                            reject(result.error ? result.error.message : 'Upload failed');
+                                        }
+                                    })
+                                    .catch(reject);
+                            }));
+                    },
+                };
+            };
+        }
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(newEditor => {
+            editor = newEditor;
+            updateUploadUrl();
+        })
+        .catch(error => console.error(error));
+
+    document.getElementById('title').addEventListener('input', updateUploadUrl);
 </script>
 
 </body>
