@@ -5,9 +5,6 @@
     <label>Title:</label>
     <input type="text" name="title" value="<?= htmlspecialchars($articleData['title']) ?>" required><br>
 
-    <label>Image URL:</label>
-    <input type="text" name="image" value="<?= htmlspecialchars($articleData['image']) ?>"><br>
-
     <label>Content:</label>
     <textarea name="content" required><?= htmlspecialchars($articleData['content']) ?></textarea><br>
 

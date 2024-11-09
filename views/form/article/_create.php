@@ -2,9 +2,6 @@
     <label>Title:</label>
     <input type="text" name="title" id="title" required><br>
 
-    <label>Image URL:</label>
-    <input type="text" name="image"><br>
-
     <label>Content:</label>
     <textarea name="content" id="editor" required></textarea><br>
 

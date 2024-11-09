@@ -23,7 +23,7 @@ class ArticleController
     // Show the form for creating a new article
     public function create(): void
     {
-        $titlePage = "Create Article";
+        $title = "Create Article";
         $view = "views/form/article/_create.php"; // Assuming you have a form view for creating an article
         include "views/layout.php";
     }

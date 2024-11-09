@@ -22,12 +22,11 @@ class Article extends Model
         int    $category_id
     ): int|false
     {
-        $sql = "INSERT INTO articles (title, image, date, content, visible, category_id) 
-                VALUES (:title, :image, NOW(), :content, :visible, :category_id)";
+        $sql = "INSERT INTO articles (title, date, content, visible, category_id) 
+                VALUES (:title, NOW(), :content, :visible, :category_id)";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":image", $image);
         $stmt->bindParam(":content", $content);
         $stmt->bindParam(":visible", $visible);
         $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);
@@ -55,7 +54,6 @@ class Article extends Model
     public function updateArticle(
         int    $id,
         string $title,
-        string $image, // New image (can be empty if not updating)
         string $content,
         int    $visible,
         int    $category_id
@@ -73,7 +71,6 @@ class Article extends Model
         }
 
         $currentContent = $currentData['content'];
-        $currentImage = $currentData['image'];
 
         // Extract image paths from current and new content
         $currentImages = $this->extractImagePaths($currentContent);
@@ -87,24 +84,14 @@ class Article extends Model
             }
         }
 
-        // Handle the main image update
-        $updatedImage = $currentImage;
-        if (!empty($image)) { // If a new image is provided
-            if ($currentImage && file_exists($currentImage)) {
-                unlink($currentImage); // Delete old main image
-            }
-            $updatedImage = $image; // Set new image
-        }
-
         // Update the article with new content and main image
         $sql = "UPDATE articles 
-            SET title = :title, image = :image, 
+            SET title = :title,
                 content = :content, visible = :visible, category_id = :category_id
             WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":image", $updatedImage); // Use updated image path
         $stmt->bindParam(":content", $content);
         $stmt->bindParam(":visible", $visible);
         $stmt->bindParam(":category_id", $category_id, PDO::PARAM_INT);
