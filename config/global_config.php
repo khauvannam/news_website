@@ -1,6 +1,7 @@
 <?php
-const DB_HOST = "localhost:3375";
 
+define('BASE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST']);
+const DB_HOST = "localhost:3375";
 const DB_NAME = "news";
 
 const DB_USER = "nam";

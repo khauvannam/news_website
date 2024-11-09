@@ -25,33 +25,48 @@
 <!-- Place CKEditor script here, before the closing </body> tag -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
 <script>
+    let editor;
+
+    function updateUploadUrl() {
+        const title = document.getElementById('title').value.trim().replace(/\s+/g, '_');
+        if (editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return {
+                    upload: () => {
+                        return loader.file
+                            .then((file) => new Promise((resolve, reject) => {
+                                const data = new FormData();
+                                data.append('upload', file);
+
+                                fetch(`./config/upload_config.php?title=${title}`, {
+                                    method: 'POST',
+                                    body: data,
+                                })
+                                    .then(response => response.json())
+                                    .then(result => {
+                                        if (result.uploaded) {
+                                            resolve({default: result.url});
+                                        } else {
+                                            reject(result.error ? result.error.message : 'Upload failed');
+                                        }
+                                    })
+                                    .catch(reject);
+                            }));
+                    },
+                };
+            };
+        }
+    }
+
     ClassicEditor
-        .create(document.querySelector('#editor'), {
-            ckfinder: {
-                uploadUrl: './config/upload_config.php'
-            },
-            toolbar: [
-                'heading', '|', 'bold', 'italic', 'underline', 'fontColor', 'fontBackgroundColor', 'fontSize', '|',
-                'link', 'bulletedList', 'numberedList', '|',
-                'insertTable', 'blockQuote', '|',
-                'imageUpload', 'mediaEmbed', '|',
-                'undo', 'redo'
-            ],
-            image: {
-                toolbar: [
-                    'imageStyle:full', 'imageStyle:side', '|',
-                    'imageTextAlternative'
-                ]
-            },
-            table: {
-                contentToolbar: [
-                    'tableColumn', 'tableRow', 'mergeTableCells'
-                ]
-            }
+        .create(document.querySelector('#editor'))
+        .then(newEditor => {
+            editor = newEditor;
+            updateUploadUrl();
         })
-        .catch(error => {
-            console.error(error);
-        });
+        .catch(error => console.error(error));
+
+    document.getElementById('title').addEventListener('input', updateUploadUrl);
 </script>
 </body>
 </html>

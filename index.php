@@ -11,7 +11,8 @@ $baseDir = ROOT_URL;
 
 $router = [
     'get' => [
-        'home' => [new userController(), 'register']
+        '' => [new userController(), 'register'],
+        'article_create' => [new articleController(), 'create'],
     ],
     'post' => [],
 ];
