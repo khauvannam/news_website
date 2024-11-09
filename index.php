@@ -16,6 +16,7 @@ $router = [
         'category_create' => [new categoryController, 'add'],
         'category_edit' => [new categoryController, 'edit'],
         'category_delete' => [new categoryController, 'delete'],
+        'article_create' => [new articleController, 'create'],
     ],
     'post' => [
         'category_create_' => [new categoryController, 'add_'],

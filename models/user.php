@@ -6,9 +6,9 @@ require_once 'model.php';
 class user extends Model
 {
     // Save a new user to the database
-    public function saveUser(string $firstName, string $lastName, string $email, string $password): int|false
+    public function saveUser(string $firstName, string $lastName, string $email, string $password, int $isAdmin): int|false
     {
-        $sql = "INSERT INTO users (first_name, last_name, email, password) VALUES (:fn, :ln, :em, :pwd)";
+        $sql = "INSERT INTO users (first_name, last_name, email, password, is_admin) VALUES (:fn, :ln, :em, :pwd, :ia)";
         $stmt = $this->conn->prepare($sql);
 
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -17,6 +17,7 @@ class user extends Model
         $stmt->bindParam(":ln", $lastName);
         $stmt->bindParam(":em", $email);
         $stmt->bindParam(":pwd", $hashPassword);
+        $stmt->bindParam(":ia", $isAdmin);
 
         return $stmt->execute() ? (int)$this->conn->lastInsertId() : false;
     }
