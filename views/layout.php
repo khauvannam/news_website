@@ -4,10 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><?php echo $titlePage; ?></title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-            rel="stylesheet"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -31,7 +28,7 @@
     ClassicEditor
         .create(document.querySelector('#editor'), {
             ckfinder: {
-                uploadUrl: '/upload.php'
+                uploadUrl: './config/upload_config.php'
             },
             toolbar: [
                 'heading', '|', 'bold', 'italic', 'underline', 'fontColor', 'fontBackgroundColor', 'fontSize', '|',

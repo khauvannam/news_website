@@ -6,10 +6,10 @@
     <input type="text" name="image"><br>
 
     <label>Content:</label>
-    <textarea name="content" required></textarea><br>
+    <textarea name="content" id="editor" required></textarea><br>
 
     <label>Visible:</label>
-    <input type="checkbox" name="visible"><br>
+    <input type="checkbox" name="visible" value="1"><br>
 
     <button type="submit">Save Article</button>
 </form>
