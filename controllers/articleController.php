@@ -16,8 +16,8 @@ class ArticleController
     {
         $articles = $this->articleModel->getAllArticles();
         $titlePage = "All Articles";
-        $view = "views/articles/index.php"; // Assuming you have a view for listing articles
-        include "views/layout.php";
+        $view = "views/admin/article.php"; // Assuming you have a view for listing articles
+        include "views/admin/layoutAdmin.php";
     }
 
     // Show the form for creating a new article
@@ -42,7 +42,7 @@ class ArticleController
         $articleId = $this->articleModel->saveArticle($title, $image, $content, $visible, $category_id);
 
         if ($articleId) {
-            header("Location: articles.php?action=index"); // Redirect to article list
+            header("Location: article"); // Redirect to article list
         } else {
             echo "Failed to save article.";
         }
@@ -69,8 +69,8 @@ class ArticleController
 
         if ($article) {
             $titlePage = "Edit Article";
-            $view = "views/articles/edit.php"; // Assuming an edit view
-            include "views/layout.php";
+            $view = "views/form/article/_edit.php"; // Assuming an edit view
+            include "views/admin/layoutAdmin.php";
         } else {
             echo "Article not found.";
         }
@@ -89,7 +89,7 @@ class ArticleController
         $success = $this->articleModel->updateArticle($id, $title, $image, $content, $visible, $category_id);
 
         if ($success) {
-            header("Location: articles.php?action=index"); // Redirect to article list
+            header("Location: article"); // Redirect to article list
         } else {
             echo "Failed to update article.";
         }
@@ -101,7 +101,7 @@ class ArticleController
         $success = $this->articleModel->deleteArticle($id);
 
         if ($success) {
-            header("Location: articles.php?action=index"); // Redirect to article list
+            header("Location: article"); // Redirect to article list
         } else {
             echo "Failed to delete article.";
         }

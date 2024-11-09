@@ -71,16 +71,48 @@
 <!-- CKEditor Script -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
 <script>
-   ClassicEditor
-        .create(document.querySelector('#editor'), {
-            ckfinder: {
-                uploadUrl: './config/upload_config.php'
-            },
-        }).then(editor => {
-            window.editor = editor;
-        }).catch(error => {
-            console.error(error);
-        });
+    let editor;
+
+    function updateUploadUrl() {
+        const title = document.getElementById('title').value.trim().replace(/\s+/g, '_');
+        if (editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return {
+                    upload: () => {
+                        return loader.file
+                            .then((file) => new Promise((resolve, reject) => {
+                                const data = new FormData();
+                                data.append('upload', file);
+
+                                fetch(`./config/upload_config.php?title=${title}`, {
+                                    method: 'POST',
+                                    body: data,
+                                })
+                                    .then(response => response.json())
+                                    .then(result => {
+                                        if (result.uploaded) {
+                                            resolve({default: result.url});
+                                        } else {
+                                            reject(result.error ? result.error.message : 'Upload failed');
+                                        }
+                                    })
+                                    .catch(reject);
+                            }));
+                    },
+                };
+            };
+        }
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(newEditor => {
+            editor = newEditor;
+            updateUploadUrl();
+        })
+        .catch(error => console.error(error));
+
+    document.getElementById('title').addEventListener('input', updateUploadUrl);
 </script>
 
 </body>
