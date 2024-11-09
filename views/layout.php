@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title><?php echo $titlePage; ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><?php echo $title; ?></title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -12,6 +11,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <div>
@@ -22,7 +22,6 @@
     <footer><?php include "footer.php"; ?></footer>
 </div>
 
-<!-- Place CKEditor script here, before the closing </body> tag -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
 <script>
     let editor;
@@ -69,3 +68,4 @@
     document.getElementById('title').addEventListener('input', updateUploadUrl);
 </script>
 </body>
+</html>

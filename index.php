@@ -11,10 +11,17 @@ $baseDir = ROOT_URL;
 
 $router = [
     'get' => [
-        '' => [new userController(), 'register'],
-        'article_create' => [new articleController(), 'create'],
+        '' => [new homeController, 'index'],
+        'category' => [new categoryController, 'index'],
+        'category_create' => [new categoryController, 'add'],
+        'category_edit' => [new categoryController, 'edit'],
+        'category_delete' => [new categoryController, 'delete'],
+        'article_create' => [new articleController, 'create'],
     ],
-    'post' => [],
+    'post' => [
+        'category_create_' => [new categoryController, 'add_'],
+        'category_edit_' => [new categoryController, 'edit_'],
+    ],
 ];
 
 $path = substr($_SERVER['REQUEST_URI'], strlen($baseDir));

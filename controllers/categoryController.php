@@ -14,16 +14,16 @@ class categoryController
     function index() {
         $this->adminService->checkLoginAdmin();
         $title = "Quản trị loại sản phẩm";
-        $view = "views/category.php";
+        $view = "views/admin/category.php";
         $tatCaLoai = $this->model->readAll(); // Fetch all categoriest
-        include "views/layout.php";
+        include "views/admin/layoutAdmin.php";
     }
     
     function add() {
         $this->adminService->checkLoginAdmin();
         $title = "Thêm loại sản phẩm";
         $view = "views/form/category/_create.php";
-        include "views/layout.php";
+        include "views/admin/layoutAdmin.php";
     }
 
     function add_() {
@@ -45,7 +45,7 @@ class categoryController
             $title = "Sửa loại sản phẩm";
             $view = "views/form/category/_edit.php";
 
-            include "views/layout.php";
+            include "views/admin/layoutAdmin.php";
         } else {
             echo "Không tìm thấy loại sản phẩm.";
         }

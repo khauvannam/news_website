@@ -4,11 +4,11 @@ services:
     volumes:
       - news_website:/var/lib/mysql
     ports:
-      - '3375:3306'
+      - "3375:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: news
-      MYSQL_USER: nam
+      MYSQL_USER: thang
       MYSQL_PASSWORD: Ex@mple12345
 
 volumes:
