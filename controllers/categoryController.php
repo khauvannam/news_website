@@ -1,17 +1,21 @@
 <?php
+
+use JetBrains\PhpStorm\NoReturn;
+
 require_once "models/category.php";
 require_once "services/adminService.php";
 
 class categoryController
 {
     private adminService $adminService;
-    private ?category $model = null;
+    private ?category $model;
     public function __construct()
     {
         $this->adminService = new adminService();
         $this->model = new category();
     }
-    function index() {
+    function index(): void
+    {
         $this->adminService->checkLoginAdmin();
         $title = "Quản trị loại sản phẩm";
         $view = "views/admin/category.php";
@@ -19,14 +23,15 @@ class categoryController
         include "views/admin/layoutAdmin.php";
     }
     
-    function add() {
+    function add(): void
+    {
         $this->adminService->checkLoginAdmin();
         $title = "Thêm loại sản phẩm";
         $view = "views/form/category/_create.php";
         include "views/admin/layoutAdmin.php";
     }
 
-    function add_() {
+    #[NoReturn] function add_() {
         $this->adminService->checkLoginAdmin();
         $ten_loai = trim(strip_tags($_POST['ten_loai']));
         
@@ -35,7 +40,8 @@ class categoryController
         exit();
     }
 
-    function edit() {
+    function edit(): void
+    {
         $this->adminService->checkLoginAdmin();
         global $params;
         $id_loai = $params['id'];
@@ -51,7 +57,8 @@ class categoryController
         }
     }
 
-    function edit_() {
+    function edit_(): void
+    {
         $this->adminService->checkLoginAdmin();
         $id_loai = (int)$_POST['id_loai'];
         $ten_loai = trim(strip_tags($_POST['ten_loai']));
@@ -65,7 +72,8 @@ class categoryController
         }
     }
 
-    function delete() {
+    function delete(): void
+    {
         $this->adminService->checkLoginAdmin();
         global $params;
         $id_loai = $params['id'];

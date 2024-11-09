@@ -16,7 +16,6 @@ class Article extends Model
     // Save a new article with category ID and the current date
     public function saveArticle(
         string $title,
-        string $image,
         string $content,
         int    $visible,
         int    $category_id
